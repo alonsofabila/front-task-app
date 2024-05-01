@@ -1,5 +1,5 @@
 export function LogIn() {
     return (
-        <div>Login</div>
+        <div>LogIn</div>
     );
 }
