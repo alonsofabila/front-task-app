@@ -1,5 +1,8 @@
+import LogInForm from "../../components/user-components/LogInForm.jsx";
+
+
 export function LogIn() {
     return (
-        <div>LogIn</div>
+        <LogInForm route="users/api/v1/token/" />
     );
 }
