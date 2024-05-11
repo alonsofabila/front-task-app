@@ -8,13 +8,11 @@ export default function CreateTaskForm({ route }) {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [taskStatus, setTaskStatus] = useState("")
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
         try {
             const createTask = await api.post(route, {
@@ -32,8 +30,6 @@ export default function CreateTaskForm({ route }) {
 
         } catch (e) {
             alert(`Error: ${e.response.data.detail}`);
-        } finally {
-            setLoading(false)
         }
     }
 

@@ -8,12 +8,10 @@ import PropTypes from "prop-types";
 export default function LogInForm({ route }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
 
         try {
@@ -30,8 +28,6 @@ export default function LogInForm({ route }) {
 
         } catch (e) {
             alert(`Error: ${e.response.data.detail}`);
-        } finally {
-            setLoading(false);
         }
     }
 

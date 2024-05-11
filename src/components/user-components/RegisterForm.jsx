@@ -10,12 +10,10 @@ export default function RegisterForm({ route }) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        setLoading(true);
         e.preventDefault();
 
         try {
@@ -32,8 +30,6 @@ export default function RegisterForm({ route }) {
             }
         } catch (e) {
             alert(`Error: ${e.message}`);
-        } finally {
-            setLoading(false);
         }
     }
 
