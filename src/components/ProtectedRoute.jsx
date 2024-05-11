@@ -21,7 +21,7 @@ export function ProtectedRoute({ children }) {
 
         try {
 
-            const response = await api.post(`/api/v1/token/refresh/`, {
+            const response = await api.post(`users/api/v1/token/refresh/`, {
                 refresh: refreshToken,
             });
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import api from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
+import { STATUS_OPTIONS } from "../../constants.js";
+import api from "../../api/api.js";
 import PropTypes from "prop-types";
 
 
@@ -11,20 +12,6 @@ export default function CreateTaskForm({ route }) {
 
     const navigate = useNavigate();
 
-    const statusOptions = [
-        {
-            value: 1,
-            label: "Pending",
-        },
-        {
-            value: 2,
-            label: "In Progress",
-        },
-        {
-            value: 3,
-            label: "Done",
-        },
-    ]
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,9 +35,13 @@ export default function CreateTaskForm({ route }) {
         }
     }
 
+    const handleCancel = () => {
+        navigate('/')
+    }
+
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={ handleSubmit }
             className="form-container"
         >
             <h1>Create Task</h1>
@@ -94,7 +85,7 @@ export default function CreateTaskForm({ route }) {
                         required={true}
                         onChange={(e) => setTaskStatus(+e.target.value)}
                     >
-                        {statusOptions.map((option) => (
+                        {STATUS_OPTIONS.map((option) => (
                             <option key={option.value} value={option.value}>
                                 {option.label}
                             </option>
@@ -105,6 +96,10 @@ export default function CreateTaskForm({ route }) {
 
             <div>
                 <button className="form-button" type="submit">Create</button>
+            </div>
+
+            <div>
+                <button onClick={ handleCancel }>Cancel</button>
             </div>
 
         </form>
