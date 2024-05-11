@@ -10,21 +10,19 @@ export function Dashboard() {
         getTasks()
     }, []);
 
-    const getTasks = async () => {
-        try {
-            const response = await api.get(`tasks/api/v1/task/`);
-            console.log(response.data.results)
+    const getTasks = () => {
+        api.get('tasks/api/v1/task/').then(response => {
             setTasks(response.data.results);
-        } catch (error) {
-            alert(error)
-        }
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     const deleteTask = (id) => {
         api.delete(`tasks/api/v1/task/${id}`).then((res) => {
             if (res.status === 204) {
                 alert("Task deleted");
-                getTasks();
+                getTasks()
             } else {
                 alert("Failed to delete task");
             }

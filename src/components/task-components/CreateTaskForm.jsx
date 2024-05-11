@@ -7,18 +7,33 @@ import PropTypes from "prop-types";
 export default function CreateTaskForm({ route }) {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
-    const [taskStatus, setTaskStatus] = useState("")
+    const [taskStatus, setTaskStatus] = useState(1)
 
     const navigate = useNavigate();
+
+    const statusOptions = [
+        {
+            value: 1,
+            label: "Pending",
+        },
+        {
+            value: 2,
+            label: "In Progress",
+        },
+        {
+            value: 3,
+            label: "Done",
+        },
+    ]
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const createTask = await api.post(route, {
-                title,
-                content,
-                taskStatus
+                title: title,
+                content: content,
+                status: taskStatus
             })
 
             if (createTask.status === 201) {
@@ -70,18 +85,20 @@ export default function CreateTaskForm({ route }) {
             </div>
 
             <div>
-                <label htmlFor="task-status">Content</label>
+                <label htmlFor="task-status">Status</label>
                 <div>
                     <select
                         id="task-status"
                         className="form-input"
                         value={taskStatus}
                         required={true}
-                        onChange={(e) => setTaskStatus(e.target.value)}
+                        onChange={(e) => setTaskStatus(+e.target.value)}
                     >
-                        <option value="1">Pending</option>
-                        <option value="2">In Progress</option>
-                        <option value="3">Done</option>
+                        {statusOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
                     </select>
                 </div>
             </div>
