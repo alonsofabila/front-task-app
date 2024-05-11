@@ -2,7 +2,6 @@ import { useState } from "react";
 import api from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import "./PACO.css";
 
 
 export default function RegisterForm({ route }) {
