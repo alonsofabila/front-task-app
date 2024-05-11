@@ -3,7 +3,6 @@ import api from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants.js";
 import PropTypes from "prop-types";
-import "./PACO.css";
 
 
 export default function LogInForm({ route }) {
