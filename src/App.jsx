@@ -2,8 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NotFound } from "./pages/NotFound.jsx";
 import { LogIn } from "./pages/user/LogIn.jsx";
 import { Register } from "./pages/user/Register.jsx";
-import { UserTasksList } from "./pages/tasks/UserTasksList.jsx";
+import { Dashboard } from "./pages/tasks/Dashboard.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { CreateTask } from "./pages/tasks/CreateTask.jsx";
 
 
 function LogOut() {
@@ -29,8 +30,16 @@ function App() {
                     path='/'
                     element={
                     <ProtectedRoute>
-                        <UserTasksList />
+                        <Dashboard />
                     </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path='/create-task'
+                    element={
+                        <ProtectedRoute>
+                            <CreateTask />
+                        </ProtectedRoute>
                     }
                 />
             </Routes>
