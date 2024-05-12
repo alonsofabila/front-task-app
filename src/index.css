@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Regular';
+    src: local('Quicksand-Regular'),
+    url('./assets/fonts/Quicksand-Regular.ttf') format('truetype');
+}
