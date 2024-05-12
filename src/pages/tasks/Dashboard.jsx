@@ -44,9 +44,14 @@ export function Dashboard() {
         navigate("/create-task");
     }
 
+    const redirectToLogout = () => {
+        navigate("/logout");
+    }
+
     return (
         <div>
             <h2>{user.username ? user.username : 'user'} task´s list</h2>
+            <button onClick={ redirectToLogout }>Log out</button>
             <button onClick={ redirectToCreateTask } >Create Task</button>
             {tasks.map((task) => (
                 <TaskCard key={ task.id } task={ task } onDelete={ deleteTask } />
