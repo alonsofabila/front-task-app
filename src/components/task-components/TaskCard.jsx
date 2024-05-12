@@ -110,7 +110,7 @@ TaskCard.propTypes = {
     task: PropTypes.shape({
         id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        content: PropTypes.string.isRequired,
+        content: PropTypes.string,
         created_at: PropTypes.string.isRequired,
         status: PropTypes.number.isRequired,
     }).isRequired,
