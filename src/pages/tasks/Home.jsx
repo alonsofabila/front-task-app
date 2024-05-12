@@ -21,7 +21,6 @@ export function Home() {
         api.get('tasks/api/v1/task/').then(response => {
 
             setTasks(response.data.results);
-            console.log(response.data);
 
             const userId = response.data.results[0]?.created_by?.id;
 
