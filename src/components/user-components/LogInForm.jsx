@@ -1,7 +1,8 @@
 import { useState } from "react";
-import api from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../constants.js";
+import { toast } from "react-hot-toast";
+import { ACCESS_TOKEN, REFRESH_TOKEN, TOAST_SUCCESS_STYLE, TOAST_ERROR_STYLE } from "../../constants.js";
+import api from "../../api/api.js";
 import PropTypes from "prop-types";
 
 
@@ -23,11 +24,12 @@ export default function LogInForm({ route }) {
             if (response.status === 200) {
                 localStorage.setItem(ACCESS_TOKEN, response.data.access);
                 localStorage.setItem(REFRESH_TOKEN, response.data.refresh);
+                toast.success('Log in success', TOAST_SUCCESS_STYLE);
                 navigate("/")
             }
 
         } catch (e) {
-            alert(`Error: ${e.response.data.detail}`);
+            toast.error('Username or Password is incorrect', TOAST_ERROR_STYLE);
         }
     }
 

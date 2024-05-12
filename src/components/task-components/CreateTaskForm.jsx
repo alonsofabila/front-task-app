@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { STATUS_OPTIONS } from "../../constants.js";
+import { toast } from "react-hot-toast";
+import { STATUS_OPTIONS, TOAST_SUCCESS_STYLE, TOAST_ERROR_STYLE } from "../../constants.js";
 import api from "../../api/api.js";
 import PropTypes from "prop-types";
 
@@ -37,10 +38,10 @@ export default function CreateTaskForm({ route, method, task, setEditIsShown }) 
                 })
 
                 if (createTask.status === 201) {
-                    alert('Task Created');
+                    toast.success('Task created.', TOAST_SUCCESS_STYLE);
                     navigate('/')
                 } else {
-                    alert('Failed to create task');
+                    toast.error('Failed to create task.', TOAST_ERROR_STYLE);
                 }
             } else {
                 const updateTask = await api.put(`${route}${task.id}/`, {
@@ -50,17 +51,19 @@ export default function CreateTaskForm({ route, method, task, setEditIsShown }) 
                 })
 
                 if (updateTask.status === 200) {
-                    alert('Task Updated');
+                    toast.success('Task updated.', TOAST_SUCCESS_STYLE);
                     setEditIsShown(false)
-                    window.location.reload();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500)
                 } else {
-                    alert('Failed to update task');
+                    toast.error('Failed to update task', TOAST_ERROR_STYLE);
                 }
 
             }
 
         } catch (e) {
-            alert(`Error: ${e.response.data.detail}`);
+            toast.error(e.message, TOAST_ERROR_STYLE);
         }
     }
 
