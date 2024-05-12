@@ -31,6 +31,10 @@ export default function LogInForm({ route }) {
         }
     }
 
+    const redirectToRegister = () => {
+        navigate("/register");
+    }
+
     return (
         <form
             onSubmit={handleSubmit}
@@ -68,6 +72,10 @@ export default function LogInForm({ route }) {
 
             <div>
                 <button className="form-button" type="submit">Login</button>
+            </div>
+
+            <div>
+                <button onClick={ redirectToRegister }>Register</button>
             </div>
 
         </form>
