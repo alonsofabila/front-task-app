@@ -1,33 +1,62 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { STATUS_OPTIONS } from "../../constants.js";
 import api from "../../api/api.js";
 import PropTypes from "prop-types";
 
 
-export default function CreateTaskForm({ route }) {
+export default function CreateTaskForm({ route, method, task, setEditIsShown }) {
+
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [taskStatus, setTaskStatus] = useState(1)
 
     const navigate = useNavigate();
 
+    const name = method === 'Create' ? 'Create' : 'Edit'
+
+    useEffect(() => {
+        if (name === 'Edit' && task) {
+            setTitle(task.title);
+            setContent(task.content);
+            setTaskStatus(task.status);
+        }
+    }, [name, task]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const createTask = await api.post(route, {
-                title: title,
-                content: content,
-                status: taskStatus
-            })
 
-            if (createTask.status === 201) {
-                alert('Task Created');
-                navigate("/")
+            if (method === 'Create') {
+                const createTask = await api.post(route, {
+                    title: title,
+                    content: content,
+                    status: taskStatus
+                })
+
+                if (createTask.status === 201) {
+                    alert('Task Created');
+                    navigate('/')
+                } else {
+                    alert('Failed to create task');
+                }
             } else {
-                alert('Failed to create task');
+                const updateTask = await api.put(`${route}${task.id}/`, {
+                    title: title,
+                    content: content,
+                    status: taskStatus
+                })
+
+                if (updateTask.status === 200) {
+                    alert('Task Updated');
+                    setEditIsShown(false)
+                    window.location.reload();
+                } else {
+                    alert('Failed to update task');
+                }
+
             }
 
         } catch (e) {
@@ -41,10 +70,10 @@ export default function CreateTaskForm({ route }) {
 
     return (
         <form
-            onSubmit={ handleSubmit }
+            onSubmit={handleSubmit}
             className="form-container"
         >
-            <h1>Create Task</h1>
+            <h1>{name} Task</h1>
 
             <div>
                 <label htmlFor="title">Title</label>
@@ -95,17 +124,27 @@ export default function CreateTaskForm({ route }) {
             </div>
 
             <div>
-                <button className="form-button" type="submit">Create</button>
+                <button className="form-button" type="submit">{name === 'Create' ? 'Create' : 'Save'}</button>
             </div>
 
-            <div>
-                <button onClick={ handleCancel }>Cancel</button>
-            </div>
+            {name === 'Create' ?
+                <div>
+                    <button onClick={handleCancel}>Cancel</button>
+                </div>
+                :
+                <div>
+                    <button onClick={() => {setEditIsShown(false)}}>Cancel</button>
+                </div>
+            }
 
-        </form>
-    )
+
+</form>
+)
 }
 
 CreateTaskForm.propTypes = {
     route: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    task: PropTypes.object,
+    setEditIsShown: PropTypes.func,
 }

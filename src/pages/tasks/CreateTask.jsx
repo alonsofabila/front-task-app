@@ -3,6 +3,6 @@ import CreateTaskForm from "../../components/task-components/CreateTaskForm.jsx"
 
 export function CreateTask() {
     return (
-        <CreateTaskForm route='tasks/api/v1/task/' />
+        <CreateTaskForm route='tasks/api/v1/task/' method='Create' />
     );
 }
