@@ -77,29 +77,38 @@ export function Home() {
                 </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
-                <div className="">
-                    <h3 className="text-lg font-semibold mb-2">Pending</h3>
-                    {tasks.filter((task) => task.status === 1).map((task) => (
-                        <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
-                    ))}
-                </div>
+            {tasks.length > 0 ?
+                <div className="grid grid-cols-3 gap-2">
+                    <div className="">
+                        <h3 className="text-lg font-semibold mb-2">Pending</h3>
+                        {tasks.filter((task) => task.status === 1).map((task) => (
+                            <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
+                        ))}
+                    </div>
 
 
-                <div className="">
-                    <h3 className="text-lg font-semibold mb-2">In Progress</h3>
-                    {tasks.filter((task) => task.status === 2).map((task) => (
-                        <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
-                    ))}
-                </div>
+                    <div className="">
+                        <h3 className="text-lg font-semibold mb-2">In Progress</h3>
+                        {tasks.filter((task) => task.status === 2).map((task) => (
+                            <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
+                        ))}
+                    </div>
 
-                <div className="">
-                    <h3 className="text-lg font-semibold mb-2">Done</h3>
-                    {tasks.filter((task) => task.status === 3).map((task) => (
-                        <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
-                    ))}
+                    <div className="">
+                        <h3 className="text-lg font-semibold mb-2">Done</h3>
+                        {tasks.filter((task) => task.status === 3).map((task) => (
+                            <TaskCard key={task.id} task={task} onDelete={deleteTask}/>
+                        ))}
+                    </div>
                 </div>
-            </div>
+                :
+                <div className="flex justify-center items-center h-full">
+                    <div className="text-center">
+                        <h2 className="text-2xl font-bold">It seems you don&apos;t have tasks</h2>
+                        <h3 className="text-lg text-gray-600">Start creating some of them</h3>
+                    </div>
+                </div>
+            }
         </div>
     );
 }
