@@ -21,12 +21,15 @@ export function Dashboard() {
         api.get('tasks/api/v1/task/').then(response => {
 
             setTasks(response.data.results);
+            console.log(response.data);
 
-            const userId = response.data.results[0].created_by;
+            const userId = response.data.results[0]?.created_by?.id;
 
-            api.get(`users/api/v1/user/${userId}`).then(response => {
-                setUser(response.data);
-            }).catch(error => toast.error(error.message));
+            if (userId) {
+                api.get(`users/api/v1/user/${userId}`).then(response => {
+                    setUser(response.data);
+                }).catch(error => toast.error(error.message));
+            }
 
         }).catch(error => {
             toast.error(error.message);
