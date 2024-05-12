@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TaskCard } from "../../components/task-components/TaskCard.jsx";
+import { toast } from "react-hot-toast";
+import { TOAST_SUCCESS_STYLE, TOAST_ERROR_STYLE } from "../../constants.js";
 import api from "../../api/api.js";
 
 
@@ -17,26 +19,30 @@ export function Dashboard() {
 
     const getTasks = () => {
         api.get('tasks/api/v1/task/').then(response => {
+
             setTasks(response.data.results);
+
             const userId = response.data.results[0].created_by;
+
             api.get(`users/api/v1/user/${userId}`).then(response => {
                 setUser(response.data);
-            }).catch(error => console.log(error));
+            }).catch(error => toast.error(error.message));
+
         }).catch(error => {
-            console.log(error);
+            toast.error(error.message);
         })
     }
 
     const deleteTask = (id) => {
         api.delete(`tasks/api/v1/task/${id}`).then((res) => {
             if (res.status === 204) {
-                alert("Task deleted");
+                toast.success("Task deleted!", TOAST_SUCCESS_STYLE);
                 getTasks()
             } else {
-                alert("Failed to delete task");
+                toast.error("Error deleting task", TOAST_ERROR_STYLE);
             }
         }).catch((error) => {
-            alert(error);
+            toast.error(error.message, TOAST_ERROR_STYLE);
         })
     }
 

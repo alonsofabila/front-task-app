@@ -5,6 +5,7 @@ import { Register } from "./pages/user/Register.jsx";
 import { Dashboard } from "./pages/tasks/Dashboard.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CreateTask } from "./pages/tasks/CreateTask.jsx";
+import { Toaster } from "react-hot-toast";
 
 
 function LogOut() {
@@ -43,6 +44,7 @@ function App() {
                     }
                 />
             </Routes>
+            <Toaster />
         </BrowserRouter>
     )
 }

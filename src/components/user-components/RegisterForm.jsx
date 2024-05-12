@@ -1,6 +1,8 @@
 import { useState } from "react";
-import api from "../../api/api.js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { TOAST_ERROR_STYLE, TOAST_SUCCESS_STYLE } from "../../constants.js";
+import api from "../../api/api.js";
 import PropTypes from "prop-types";
 
 
@@ -18,18 +20,19 @@ export default function RegisterForm({ route }) {
 
         try {
             const response = await api.post(route, {
-                "first_name": firstName,
-                "last_name": lastName,
-                "username": username,
-                "email": email,
-                "password": password}
+                'first_name': firstName,
+                'last_name': lastName,
+                'username': username,
+                'email': email,
+                'password': password}
             );
 
             if (response.status === 201) {
-                navigate("/login");
+                navigate('/login');
+                toast.success('User registered successfully.', TOAST_SUCCESS_STYLE);
             }
-        } catch (e) {
-            alert(`Error: ${e.message}`);
+        } catch (error) {
+            toast.error('Unable to register user', TOAST_ERROR_STYLE);
         }
     }
 
